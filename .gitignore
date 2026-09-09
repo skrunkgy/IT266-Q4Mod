@@ -37,4 +37,5 @@
 /build
 
 # Other
+.cache/
 compile_commands.json
