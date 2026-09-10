@@ -1,5 +1,7 @@
 #!/bin/bash
-# I've added this build script in to support IDE's on Linux that do not have a CMake extension such as nvim etc
+
+# Script that simply builds binary with our cmake list
+
 cmake -S . -B build
 cd build
 make

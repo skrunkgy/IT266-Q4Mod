@@ -1,8 +1,6 @@
 #!/usr/bin/sh
 
-# Simple script that should upload .so into the .pk4 file
-# https://doomwiki.org/wiki/PK4
-# https://libzip.org/documentation/
+# Script that puts our binary into the pak file in our mod folder (or creates pak file then does it)
 
 QUAKE_DIR="$HOME/Games/Quake 4"
 MOD_NAME="test_mod"
