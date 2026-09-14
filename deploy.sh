@@ -20,6 +20,9 @@ if [ $? -ne 0 ]; then
 	cp "$QUAKE_DIR/q4base/game100.pk4" "$QUAKE_DIR/$MOD_NAME/"
 fi
 
+# Copy content of our mod folder into the deployed mod's directory
+cp -r mod/* "$QUAKE_DIR/$MOD_NAME/"
+
 # I am so sorry if this looks like crap, this library is so ass
 TARGET_PK4="$QUAKE_DIR/$MOD_NAME/game100.pk4"
 INDEX=$(ziptool "$TARGET_PK4" name_locate gamex86.so 0 | awk '{print $9}')
