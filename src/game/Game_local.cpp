@@ -5138,7 +5138,7 @@ bool idGameLocal::CheatsOk(bool requirePlayer)
 {
 	idPlayer *player;
 
-	if (!cvarSystem->GetCVarBool("net_allowCheats"))
+	if ( isMultiplayer && !cvarSystem->GetCVarBool("net_allowCheats"))
 	{
 		Printf("Not allowed in multiplayer.\n");
 		return false;
