@@ -11948,9 +11948,6 @@ void idPlayer::Damage(idEntity *inflictor, idEntity *attacker, const idVec3 &dir
 			damageDef->dict.GetFloat("attackerPushScale", "2", attackerPushScale);
 		}
 		
-		// andrew: I trust the original author's intentions of the attackerPushScale, so we comment this out
-		// damageDef->dict.GetFloat("attackerPushScale", "2", attackerPushScale);
-
 		kick = dir;
 
 		kick.Normalize();
