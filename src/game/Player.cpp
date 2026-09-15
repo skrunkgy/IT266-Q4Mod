@@ -11933,14 +11933,11 @@ void idPlayer::Damage(idEntity *inflictor, idEntity *attacker, const idVec3 &dir
 	}
 
 	knockback *= damageScale;
-
+	
+	// andrew: fl probably stands for "Flag(s)", id has a such a way with names
 	if (knockback != 0 && !fl.noknockback)
 	{
-
-		// NOTE:  looked for mods that accomplished this, and was delighted to find a former IT266 student already implemented this
-		// I don't want to be accused of plagiarism, since all they did was copy paste the knockback section into the SP block
-		// https://github.com/98jfiore/Quake4RocketMod/commit/60d3a38023f8fdaae5cb0ce7a3fc733827475339#diff-1b7b75626355255c405efe9171da4d4457bcd215d41fd3af73e27424fd86bf85R10173
-		
+		// andrew: Originally set knockback to 0 if we were in SP, and returned. Credits for this pointer in the README.md
 		if (attacker != this)
 		{
 			attackerPushScale = 1.0f;
@@ -11951,13 +11948,15 @@ void idPlayer::Damage(idEntity *inflictor, idEntity *attacker, const idVec3 &dir
 			damageDef->dict.GetFloat("attackerPushScale", "2", attackerPushScale);
 		}
 		
-		damageDef->dict.GetFloat("attackerPushScale", "2", attackerPushScale);
+		// andrew: I trust the original author's intentions of the attackerPushScale, so we comment this out
+		// damageDef->dict.GetFloat("attackerPushScale", "2", attackerPushScale);
 
 		kick = dir;
 
 		kick.Normalize();
 		kick *= g_knockback.GetFloat() * knockback * attackerPushScale / 200.0f;
-
+		
+		// andrew: physicsObj probably references the physics body of the class, but refer to different types
 		physicsObj.SetLinearVelocity(physicsObj.GetLinearVelocity() + kick);
 
 		// set the timer so that the player can't cancel out the movement immediately
