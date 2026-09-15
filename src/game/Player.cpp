@@ -11936,33 +11936,32 @@ void idPlayer::Damage(idEntity *inflictor, idEntity *attacker, const idVec3 &dir
 
 	if (knockback != 0 && !fl.noknockback)
 	{
-		if (!gameLocal.isMultiplayer && attacker == this)
+
+		// NOTE:  looked for mods that accomplished this, and was delighted to find a former IT266 student already implemented this
+		// I don't want to be accused of plagiarism, since all they did was copy paste the knockback section into the SP block
+		// https://github.com/98jfiore/Quake4RocketMod/commit/60d3a38023f8fdaae5cb0ce7a3fc733827475339#diff-1b7b75626355255c405efe9171da4d4457bcd215d41fd3af73e27424fd86bf85R10173
+		
+		if (attacker != this)
 		{
-			// In SP, no knockback from your own stuff
-			knockback = 0;
+			attackerPushScale = 1.0f;
 		}
 		else
 		{
-			if (attacker != this)
-			{
-				attackerPushScale = 1.0f;
-			}
-			else
-			{
-				// since default attackerDamageScale is 0.5, default attackerPushScale should be 2
-				damageDef->dict.GetFloat("attackerPushScale", "2", attackerPushScale);
-			}
-
-			kick = dir;
-
-			kick.Normalize();
-			kick *= g_knockback.GetFloat() * knockback * attackerPushScale / 200.0f;
-
-			physicsObj.SetLinearVelocity(physicsObj.GetLinearVelocity() + kick);
-
-			// set the timer so that the player can't cancel out the movement immediately
-			physicsObj.SetKnockBack(idMath::ClampInt(50, 200, knockback * 2));
+			// since default attackerDamageScale is 0.5, default attackerPushScale should be 2
+			damageDef->dict.GetFloat("attackerPushScale", "2", attackerPushScale);
 		}
+		
+		damageDef->dict.GetFloat("attackerPushScale", "2", attackerPushScale);
+
+		kick = dir;
+
+		kick.Normalize();
+		kick *= g_knockback.GetFloat() * knockback * attackerPushScale / 200.0f;
+
+		physicsObj.SetLinearVelocity(physicsObj.GetLinearVelocity() + kick);
+
+		// set the timer so that the player can't cancel out the movement immediately
+		physicsObj.SetKnockBack(idMath::ClampInt(50, 200, knockback * 2));
 	}
 
 	if (damageDef->dict.GetBool("burn"))
