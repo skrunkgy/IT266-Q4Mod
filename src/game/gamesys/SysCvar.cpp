@@ -644,5 +644,5 @@ static idCVarHelp help_g_ai_showTacticalFeatures("ai_showTacticalFeatures", "Sho
 static idCVarHelp help_g_ai_useRVMasterMove("ai_useRVMasterMove", "Use new master move functions.", "Off;On", "0;1", CVARHELP_AI);
 // RAVEN END
 
-// andrew: simply add a cvar, and add flags for some reason
-idCVar sv_airaccelerate("sv_airaccelerate", "1.0", CVAR_GAME | CVAR_FLOAT | CVAR_CHEAT, "Custom air accelerate for bhopping :)");
+// andrew: simply add a cvar, flags and minmax stuff. code that registers cvars are obfuscated :(
+idCVar sv_airaccelerate("sv_airaccelerate", "1.0", CVAR_GAME | CVAR_FLOAT | CVAR_CHEAT, "Custom air accelerate for bhopping :)", 0.1f, 100000.f);
