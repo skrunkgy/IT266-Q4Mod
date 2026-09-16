@@ -643,3 +643,6 @@ static idCVarHelp help_g_ai_animShow("ai_animShow", "List animations when used."
 static idCVarHelp help_g_ai_showTacticalFeatures("ai_showTacticalFeatures", "Show player view tactical features.", "Off;On", "0;1", CVARHELP_AI);
 static idCVarHelp help_g_ai_useRVMasterMove("ai_useRVMasterMove", "Use new master move functions.", "Off;On", "0;1", CVARHELP_AI);
 // RAVEN END
+
+// andrew: simply add a cvar, and add flags for some reason
+idCVar sv_airaccelerate("sv_airaccelerate", "1.0", CVAR_GAME | CVAR_FLOAT | CVAR_CHEAT, "Custom air accelerate for bhopping :)");

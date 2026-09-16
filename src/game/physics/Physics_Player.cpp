@@ -751,7 +751,8 @@ void idPhysics_Player::AirMove(void)
 	wishspeed *= scale;
 
 	// not on ground, so little effect on velocity
-	idPhysics_Player::Accelerate(wishdir, wishspeed, Pm_AirAccelerate());
+	// andrew: quake4 seems to use the same maths for air acceleration as quake 1, but I use my own cvar to control this
+	idPhysics_Player::Accelerate(wishdir, wishspeed, cvarSystem->GetCVarFloat("sv_airaccelerate"));
 
 	// we may have a ground plane that is very steep, even
 	// though we don't have a groundentity
