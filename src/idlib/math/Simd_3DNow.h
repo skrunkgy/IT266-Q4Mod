@@ -10,13 +10,12 @@
 ===============================================================================
 */
 
-class idSIMD_3DNow : public idSIMD_MMX
-{
+class idSIMD_3DNow : public idSIMD_MMX {
 #ifdef _WIN32
 public:
-	virtual const char *VPCALL GetName(void) const;
+	virtual const char * VPCALL GetName( void ) const;
 
-	virtual void VPCALL Memcpy(void *dst, const void *src, const int count);
+	virtual void VPCALL Memcpy( void *dst,			const void *src,		const int count );
 
 #endif
 };
