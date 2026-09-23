@@ -32,6 +32,18 @@ I think the game runs a bit more choppy, and I have no idea why. I think it is t
 
 Before jumping through all these hopes, I was initially eyeing a project that aimed to be a modern port of Quake 4 along with its source code entirely open. However, the project relies heavily on AI generated code, and I don't trust code written by either robots or people who rely on robots.
 
+## Rebased Source code
+
+The original SDK from `Xanz/Quake4SDK` mentions modified source code. However, it came with some bugs and some insertion of credit. I didn't really care, but found that the id archive mirror also provided an SDK for Linux that uses SCons. I brought over the code and fixed some stuff. Here are some stuff I fixed:
+- SIMD instructions syntax
+- Return value of a `const char*` function returned a bool
+- Some precompiler definitions not declared
+- Minor bub fix
+
+Because the source code has been ported by myself, I am publishing this as my own repo instead of the fork. The CMakesList.txt is the only residue from the fork, and I modified it too to work. I hope this is ok.
+
 For any issues, please contact me on:
 - Discord: @skrunkgy
 - Matrix: @skrunkgy:gurtgames.com
+
+

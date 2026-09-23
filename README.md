@@ -1,13 +1,13 @@
 # Quake4SDK
 
-SDK to develop mods for Quake 4 on Linux.
+SDK and tools to run Quake 4 on Linux, as well as develop mods for it. Uses CMake to build binaries, and focuses on the GCC/Make for building. Heavily modified from `Xanz/Quake4SDK` until I pulled the source coed from an id mirror archive and fixed the code myself!!
 
 # Dependencies
 
 For the SDK you must have:
 
-- You must have CMake 3.13 or greater.
-- GCC compiler.
+- You must have CMake 3.13 or greater
+- GCC compiler
 - A VALID COPY OF QUAKE 4 SOMEWHERE!!!
 
 # Setup
@@ -24,6 +24,8 @@ Quake 4 did not ship with any Linux binaries, but id software USED TO provide a 
 ```
 
 Make sure curl is installed, or the script will complain and bail.
+
+## Dependencies
 
 ### Arch / Arch based
 
@@ -54,6 +56,10 @@ Then, make sure the following packages are installed:
 
 ## Developing with the SDK
 
-Simply use your favorite IDE to modify the source code. When you want to build it, simply run `build.sh`. This will provide a `gamex86.so` file in the `build` directory. Simply copy this into your Quake 4 game folder.
+Simply use your favorite IDE to modify the source code. When you want to build it, simply run `build.sh`. This will provide a `gamex86.so` file in the `build` directory.
+
+A `deploy.sh` script is provided to insert the binary into a .pk4 file inside the game installation directory. Please edit this script if the default Quake 4 path is not matched.
+
+A `runmod.sh` script is provided to launch the game under the mod directly. Please change the mod name in this script (and install path of Quake 4) if they don't match.
 
 For more inquiries, refer to [here](docs/notes.md)
