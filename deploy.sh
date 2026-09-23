@@ -21,7 +21,11 @@ if [ $? -ne 0 ]; then
 fi
 
 # Copy content of our mod folder into the deployed mod's directory
-cp -r mod/* "$QUAKE_DIR/$MOD_NAME/"
+if [ -z "$(ls -A mod)" ]; then
+	echo "Mod folder is empty..."
+else
+	cp -r --copy-contents mod/. "$QUAKE_DIR/$MOD_NAME"
+fi
 
 # I am so sorry if this looks like crap, this library is so ass
 TARGET_PK4="$QUAKE_DIR/$MOD_NAME/game100.pk4"
