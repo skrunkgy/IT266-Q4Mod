@@ -24,6 +24,7 @@ endif(UNIX)
 
 add_compile_definitions(GAME_DLL)
 add_compile_definitions(Q4SDK)
+add_compile_definitions(_DEBUG) # change this if needed
 
 # Needed so that VSCode can syntax check correctly.
 include_directories(${CMAKE_SOURCE_DIR}/src PUBLIC)
