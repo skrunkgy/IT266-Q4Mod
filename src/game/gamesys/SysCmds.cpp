@@ -31,6 +31,30 @@
 #include "NoGameTypeInfo.h"
 #endif
 
+// ANDREW
+void Cmd_TestSpawn( const idCmdArgs &args )
+{
+	idPlayer*		player;
+	idDict			dict;
+	
+	player = gameLocal.GetLocalPlayer();
+
+	if ( !player | gameLocal.CheatsOk() )
+	{
+		gameLocal.Printf("Ermmmm you can't do dat\n");
+		return;
+	}
+
+	if (args.Argc() < 2)
+	{
+		gameLocal.Printf("Not enough args\n");
+		return;
+	}
+
+	
+
+}
+
 /*
 ==================
 Cmd_GetFloatArg
@@ -3232,6 +3256,9 @@ void idGameLocal::InitConsoleCommands( void ) {
 	cmdSystem->AddCommand( "buyMenu",				Cmd_ToggleBuyMenu_f,		CMD_FL_GAME,				"Toggle buy menu (if in a buy zone and the game type supports it)" );
 	cmdSystem->AddCommand( "buy",					Cmd_BuyItem_f,				CMD_FL_GAME,				"Buy an item (if in a buy zone and the game type supports it)" );
 // RITUAL END
+
+// ANDREW
+	cmdSystem->AddCommand( "testspawn", Cmd_TestSpawn, CMD_FL_GAME, "Andrew test spawn in player radius!");
 
 }
 

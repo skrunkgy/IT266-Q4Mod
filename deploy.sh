@@ -3,7 +3,7 @@
 # Script that puts our binary into the pak file in our mod folder (or creates pak file then does it)
 
 QUAKE_DIR="$HOME/Games/Quake 4"
-MOD_NAME="mod_name"
+MOD_NAME=$1
 
 # Check if we have ziptool. Not really needed.
 which ziptool 1>/dev/null 2>/dev/null

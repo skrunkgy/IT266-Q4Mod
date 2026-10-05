@@ -543,16 +543,22 @@ void rvClientEntity::InitDefaultPhysics( const idVec3 &origin, const idMat3 &axi
 			}
 		}
 	}
+	
+	// andrew: some stupid hack since this is preventing us from loading checkpoints
+	if ( gameLocal.entities[ENTITYNUM_CLIENT] ) {
+		defaultPhysicsObj.SetSelf( gameLocal.entities[ENTITYNUM_CLIENT] );
+		defaultPhysicsObj.SetClipModel( clipModel, 1.0f );
+		defaultPhysicsObj.SetOrigin( origin );
+		defaultPhysicsObj.SetAxis( axis );
 
-	defaultPhysicsObj.SetSelf( gameLocal.entities[ENTITYNUM_CLIENT] );
-	defaultPhysicsObj.SetClipModel( clipModel, 1.0f );
-	defaultPhysicsObj.SetOrigin( origin );
-	defaultPhysicsObj.SetAxis( axis );
+		physics = &defaultPhysicsObj;
 
-	physics = &defaultPhysicsObj;
-
-	// by default no collision
-	physics->SetContents( 0 );
+		// by default no collision
+		physics->SetContents( 0 );
+	}
+	else
+		gameLocal.Printf( "%s trying to set self as NULL...", this->GetType()->classname );
+	
 }
 
 

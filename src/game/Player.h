@@ -1155,6 +1155,11 @@ private:
 	stateResult_t			State_Legs_Dead					( const stateParms_t& parms );
 	
  	CLASS_STATES_PROTOTYPE( idPlayer );
+
+// ANDREW BEGIN
+// public:
+// 	int			points;
+
 };
 
 ID_INLINE bool idPlayer::IsBeingTalkedTo( void ) {

@@ -3,6 +3,6 @@
 # Script to launch the modded version of our game
 
 QUAKE_DIR="$HOME/Games/Quake 4"
-MOD_NAME="mod_name"
+MOD_NAME=$1
 
 "$QUAKE_DIR"/quake4 +set fs_game $MOD_NAME
