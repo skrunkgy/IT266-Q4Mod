@@ -557,7 +557,7 @@ void rvClientEntity::InitDefaultPhysics( const idVec3 &origin, const idMat3 &axi
 		physics->SetContents( 0 );
 	}
 	else
-		gameLocal.Printf( "%s trying to set self as NULL...", this->GetType()->classname );
+		idLib::sys->DebugPrintf( "%s trying to set self as NULL...\n", this->GetType()->classname );
 	
 }
 

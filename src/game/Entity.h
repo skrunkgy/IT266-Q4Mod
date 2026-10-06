@@ -182,6 +182,9 @@ public:
 // jshepard: instant burnout when destroyed
 		bool				quickBurn				:1;
 
+// andrew: is zombie flag
+		bool				isZombie				:1;
+
 // RAVEN END
 	} fl;
 

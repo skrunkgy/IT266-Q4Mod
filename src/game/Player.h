@@ -1156,9 +1156,9 @@ private:
 	
  	CLASS_STATES_PROTOTYPE( idPlayer );
 
-// ANDREW BEGIN
-// public:
-// 	int			points;
+// ANDREW
+public:
+	int			points;
 
 };
 

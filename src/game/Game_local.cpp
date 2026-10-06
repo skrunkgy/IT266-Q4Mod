@@ -3746,6 +3746,10 @@ TIME_THIS_SCOPE("idGameLocal::RunFrame - gameDebug.BeginFrame()");
 		skipCinematic = false;		
 	}
 
+
+	// andrew: i dont know where to run this, we will do this at the end
+	ProcessZombiesGM();
+
 	// show any debug info for this frame
 	RunDebugInfo();
 	D_DrawDebugLines();

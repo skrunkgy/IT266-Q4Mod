@@ -1107,6 +1107,19 @@ private:
 	bool					banListLoaded;
 	bool					banListChanged;
 // RAVEN END
+
+// ANDREW START
+#define MAX_ZOMBIES 		32 // In case we have an array, but I might just use a linked list, or simply use the zombies tag
+
+private:
+	float					zombieSpawnTimer;
+	int						round;
+	idLinkList<idEntity*>	zombiesList;
+	
+	// I dont want to directly inject code into a game loop yet, so I will just paste this somewhere
+	void					ProcessZombiesGM(  );
+	void					SpawnZombie(  );
+// ANDREW END
 };
 
 //============================================================================

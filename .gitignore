@@ -35,3 +35,5 @@
 /Builds
 /.vs
 /build
+
+compile_commands.json
