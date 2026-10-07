@@ -1117,8 +1117,9 @@ private:
 	idLinkList<idEntity*>	zombiesList;
 	
 	// I dont want to directly inject code into a game loop yet, so I will just paste this somewhere
-	void					ProcessZombiesGM(  );
-	void					SpawnZombie(  );
+	void					InitZombiesGM( void );
+	void					ProcessZombiesGM( void );
+	void					SpawnZombie( void );
 // ANDREW END
 };
 

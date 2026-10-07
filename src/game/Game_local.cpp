@@ -1487,6 +1487,9 @@ void idGameLocal::LoadMap( const char *mapName, int randseed ) {
 // ddynerman: ambient light list
 	ambientLights.Clear();
 // RAVEN END
+
+// andrew: we will put initialization hijack here when loading the map. it makes sense in my opinion
+	InitZombiesGM();
 }
 
 /*

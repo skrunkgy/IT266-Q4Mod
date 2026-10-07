@@ -182,7 +182,7 @@ public:
 // jshepard: instant burnout when destroyed
 		bool				quickBurn				:1;
 
-// andrew: is zombie flag
+// andrew: is zombie flag. also, apparently these use something called bit-fields?
 		bool				isZombie				:1;
 
 // RAVEN END
