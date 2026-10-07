@@ -45,9 +45,6 @@ void Cmd_TestSpawn( const idCmdArgs& args ) {
 
 	gameLocal.TracePoint(player, tr, origin + idVec3(0, 0, idMath::INFINITY), origin + idVec3(0, 0, -idMath::INFINITY), MASK_ALL, NULL);
 
-	gameLocal.Printf("Spawned zombie at %s. \n", tr.endpos.ToString());
-	gameLocal.Printf("player is at %s\n", player->GetPhysics()->GetOrigin().ToString());
-
 	dict.Set( "origin", tr.endpos.ToString() );
 	
 	// zombie monsters in this game come in "transfers". halfway stroggs. pretty cool!
