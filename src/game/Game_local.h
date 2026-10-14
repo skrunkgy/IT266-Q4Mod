@@ -1120,6 +1120,8 @@ private:
 	void					InitZombiesGM( void );
 	void					ProcessZombiesGM( void );
 	void					SpawnZombie( void );
+public:
+	void					OnZombieKilled();
 // ANDREW END
 };
 

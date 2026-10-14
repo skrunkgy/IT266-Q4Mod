@@ -91,6 +91,9 @@ void rvMonsterFailedTransfer::OnDeath ( void ) {
 		gameLocal.SpawnEntityDef ( args, &torso );
 		torso->fl.takedamage = false;
 		PostEventMS( &AI_TakeDamage, 100, 1.0f );
+
+		// andrew: the torso is spawned after his legs get shot off, we want to flag it
+		torso->fl.isZombie = true;
 	}
 }
 

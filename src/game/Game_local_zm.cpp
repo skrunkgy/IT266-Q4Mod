@@ -43,15 +43,17 @@ void Cmd_TestSpawn( const idCmdArgs& args ) {
 	origin.x += idMath::Cos(a) * b;
 	origin.y += idMath::Sin(a) * b;
 
-	gameLocal.TracePoint(player, tr, origin + idVec3(0, 0, idMath::INFINITY), origin + idVec3(0, 0, -idMath::INFINITY), MASK_ALL, NULL);
+	gameLocal.TracePoint(player, tr, origin + idVec3(0, 0, 1000), origin + idVec3(0, 0, -1000), MASK_ALL, NULL);
 
 	dict.Set( "origin", tr.endpos.ToString() );
 	
 	// zombie monsters in this game come in "transfers". halfway stroggs. pretty cool!
 	// however, monster_failed_transfer has a shotgun, which I would want to disable
-	zombie = gameLocal.SpawnEntityDef("monster_slimy_transfer", &dict);
+	zombie = gameLocal.SpawnEntityDef("monster_failed_transfer", &dict);
 	zombie->fl.isZombie = true; // NOTE: all flags by default are 0. check idEntity constructor for proof
+}
 
-	// NOTE: zombies are inserted into the entities list!
-
+void idGameLocal::OnZombieKilled()
+{
+	Printf("Zombie has been killed!\n");
 }
