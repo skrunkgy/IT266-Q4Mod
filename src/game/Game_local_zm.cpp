@@ -10,15 +10,13 @@
 
 void idGameLocal::InitZombiesGM() {
 	zombieSpawnTimer = 0;
+	round = 1;
 	// player doesnt spawn yet, so we will have to do player init stuff some other place
 }
 
-void idGameLocal::ProcessZombiesGM() {
-	// Printf( "Processing ZM!\n" );
-	return;
-}
-
-void Cmd_TestSpawn( const idCmdArgs& args ) {
+// helper function that just spawns a zombie
+void SpawnZombie(float a, float b)
+{
 	idPlayer*		player;
 	trace_t			tr;
 	idDict			dict;
@@ -26,22 +24,15 @@ void Cmd_TestSpawn( const idCmdArgs& args ) {
 	idVec3			origin;
 
 	player = gameLocal.GetLocalPlayer();
-	
-	if ( !player || !gameLocal.CheatsOk( false ) ) {
-		gameLocal.Printf( "Ermmmm you can't do that\n" );
-		return;
-	}
-	
-	// begin getting a spawn radius
 
 	// for a random position
-	float a = gameLocal.random.RandomFloat() * idMath::TWO_PI;
-	float b = gameLocal.random.RandomFloat() * 100.f;
+	float c = gameLocal.random.RandomFloat() * idMath::TWO_PI;
+	float d = gameLocal.random.RandomFloat() * a + b;
 
 	origin = player->GetPhysics()->GetOrigin();
 
-	origin.x += idMath::Cos(a) * b;
-	origin.y += idMath::Sin(a) * b;
+	origin.x += idMath::Cos(c) * d;
+	origin.y += idMath::Sin(c) * d;
 
 	gameLocal.TracePoint(player, tr, origin + idVec3(0, 0, 1000), origin + idVec3(0, 0, -1000), MASK_ALL, NULL);
 
@@ -53,7 +44,24 @@ void Cmd_TestSpawn( const idCmdArgs& args ) {
 	zombie->fl.isZombie = true; // NOTE: all flags by default are 0. check idEntity constructor for proof
 }
 
-void idGameLocal::OnZombieKilled()
+void idGameLocal::ProcessZombiesGM() {
+	// Printf( "Processing ZM!\n" );
+	return;
+}
+
+void Cmd_TestSpawn( const idCmdArgs& args ) {
+	
+	if ( !gameLocal.CheatsOk( true ) ) {
+		gameLocal.Printf( "Ermmmm you can't do that\n" );
+		return;
+	}
+	
+	SpawnZombie( atof(args.Argv(0)) , atof(args.Argv(1)) );
+}
+
+// we pass a pointer to the entity for some info perhaps?
+void idGameLocal::OnZombieKilled( idEntity* killedZombie )
 {
-	Printf("Zombie has been killed!\n");
+	GetLocalPlayer()->points += 50 * round;
+	Printf("You now have %i points\n", GetLocalPlayer()->points);
 }

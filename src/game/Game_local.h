@@ -1121,7 +1121,7 @@ private:
 	void					ProcessZombiesGM( void );
 	void					SpawnZombie( void );
 public:
-	void					OnZombieKilled();
+	void					OnZombieKilled( idEntity* );
 // ANDREW END
 };
 
