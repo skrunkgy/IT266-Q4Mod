@@ -1112,7 +1112,9 @@ private:
 #define MAX_ZOMBIES 		32 // In case we have an array, but I might just use a linked list, or simply use the zombies tag
 
 private:
-	float					zombieSpawnTimer;
+	int						zmTimer;
+	int						maxRoundZombies;
+	int						zombiesSpawned;
 	int						round;
 	idLinkList<idEntity*>	zombiesList;
 	

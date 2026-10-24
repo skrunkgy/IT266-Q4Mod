@@ -1496,7 +1496,7 @@ void idPlayer::Init( void ) {
 	const char			*value;
 
 	// ANDREW
-	// points					= 0;
+	points					= 0;
 	
 	noclip					= false;
 	godmode					= false;

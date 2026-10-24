@@ -33,6 +33,7 @@
 
 // andrew: declaring this, we define later
 void Cmd_TestSpawn( const idCmdArgs &args );
+void Cmd_TestUI( const idCmdArgs &args );
 
 /*
 ==================
@@ -3239,7 +3240,7 @@ void idGameLocal::InitConsoleCommands( void ) {
 
 // andrew: add command!
 	cmdSystem->AddCommand( "testspawn", Cmd_TestSpawn, CMD_FL_GAME, "DEBUG test spawn in player radius!");
-
+	cmdSystem->AddCommand( "testui", Cmd_TestUI, CMD_FL_GAME, "Test toggling a menu!" );
 }
 
 /*

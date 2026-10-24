@@ -1234,6 +1234,9 @@ protected:
 	stateResult_t			State_Head_Idle						( const stateParms_t& parms );
 
 	CLASS_STATES_PROTOTYPE ( idAI );
+
+	// andrew: drop item
+	void					DropPowerup();
 };
 
 /*

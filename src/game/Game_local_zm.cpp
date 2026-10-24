@@ -7,16 +7,18 @@
 #pragma hdrstop
 
 #include "Game_local.h"
+#include "ai/AI.h"
 
 void idGameLocal::InitZombiesGM() {
-	zombieSpawnTimer = 0;
+	zmTimer = 0;
 	round = 1;
+	maxRoundZombies = 5;
+	zombiesSpawned = 0;
 	// player doesnt spawn yet, so we will have to do player init stuff some other place
 }
 
 // helper function that just spawns a zombie
-void SpawnZombie(float a, float b)
-{
+void SpawnZombie(float a, float b) {
 	idPlayer*		player;
 	trace_t			tr;
 	idDict			dict;
@@ -49,19 +51,34 @@ void idGameLocal::ProcessZombiesGM() {
 	return;
 }
 
+void idAI::DropPowerup() {
+
+}
+
 void Cmd_TestSpawn( const idCmdArgs& args ) {
-	
-	if ( !gameLocal.CheatsOk( true ) ) {
-		gameLocal.Printf( "Ermmmm you can't do that\n" );
-		return;
-	}
-	
 	SpawnZombie( atof(args.Argv(0)) , atof(args.Argv(1)) );
 }
 
+void Cmd_TestUI( const idCmdArgs &args ) {
+	idPlayer* player = gameLocal.GetLocalPlayer();
+
+	idUserInterface* gui =  uiManager->FindGui( "guis/buymenu.gui", true, false, true );
+	gui->SetInteractive(1);
+	gameLocal.Printf("%i \n", gui->GetStateBool("gameDraw"));
+}
+
+// buy a weapon, or refill it's ammo
+void Cmd_BuyWeapon( const idCmdArgs &args ) {
+
+}
+
+// perky
+void Cmd_BuyPerk( const idCmdArgs &args ) {
+
+}
+
 // we pass a pointer to the entity for some info perhaps?
-void idGameLocal::OnZombieKilled( idEntity* killedZombie )
-{
+void idGameLocal::OnZombieKilled( idEntity* killedZombie ) {
 	GetLocalPlayer()->points += 50 * round;
 	Printf("You now have %i points\n", GetLocalPlayer()->points);
 }
