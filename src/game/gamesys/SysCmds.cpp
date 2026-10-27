@@ -34,6 +34,9 @@
 // andrew: declaring this, we define later
 void Cmd_TestSpawn( const idCmdArgs &args );
 void Cmd_TestUI( const idCmdArgs &args );
+void Cmd_BuyWeapon( const idCmdArgs &args );
+void Cmd_BuyPerk( const idCmdArgs &args );
+void Cmd_BuyAll( const idCmdArgs &args );
 
 /*
 ==================
@@ -175,7 +178,7 @@ void Cmd_ListSpawnArgs_f( const idCmdArgs &args ) {
 
 	for ( i = 0; i < ent->spawnArgs.GetNumKeyVals(); i++ ) {
 		const idKeyValue *kv = ent->spawnArgs.GetKeyVal( i );
-		gameLocal.Printf( "\"%s\"  "S_COLOR_WHITE"\"%s\"\n", kv->GetKey().c_str(), kv->GetValue().c_str() );
+		gameLocal.Printf( "\"%s\"  " S_COLOR_WHITE "\"%s\"\n", kv->GetKey().c_str(), kv->GetValue().c_str() );
 	}
 }
 
@@ -3240,7 +3243,10 @@ void idGameLocal::InitConsoleCommands( void ) {
 
 // andrew: add command!
 	cmdSystem->AddCommand( "testspawn", Cmd_TestSpawn, CMD_FL_GAME, "DEBUG test spawn in player radius!");
-	cmdSystem->AddCommand( "testui", Cmd_TestUI, CMD_FL_GAME, "Test toggling a menu!" );
+	cmdSystem->AddCommand( "buyWeapon", Cmd_BuyWeapon, CMD_FL_GAME, "Buy a weapon, or refill its ammo." );
+	cmdSystem->AddCommand( "buyPerk", Cmd_BuyPerk, CMD_FL_GAME, "Buy a perk." );
+	cmdSystem->AddCommand( "buyAll", Cmd_BuyAll, CMD_FL_GAME, "Buy everything and see all the weapons!" );
+	cmdSystem->AddCommand( "testui", Cmd_TestUI, CMD_FL_GAME, "test ui stuff" );
 }
 
 /*

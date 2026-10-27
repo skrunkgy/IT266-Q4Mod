@@ -1497,6 +1497,8 @@ void idPlayer::Init( void ) {
 
 	// ANDREW
 	points					= 0;
+	memset(powerTimers, 0, sizeof(int)*2);
+	memset(&perkfl, 0, sizeof(perkfl));
 	
 	noclip					= false;
 	godmode					= false;
@@ -1672,7 +1674,7 @@ void idPlayer::Init( void ) {
 	// initialize the script variables
 	memset ( &pfl, 0, sizeof( pfl ) );
 	pfl.onGround = true;
-	pfl.noFallingDamage = false;
+	pfl.noFallingDamage = true; // andrew: turning this off for superjump
 
 	// Start in idle
 	SetAnimState( ANIMCHANNEL_TORSO, "Torso_Idle", 0 );
@@ -3435,6 +3437,8 @@ void idPlayer::UpdateHudStats( idUserInterface *_hud ) {
 	if ( weapon ) {
 		UpdateHudAmmo( _hud );
 	}
+
+	// ANDREW: we will update hud here
 	
 	_hud->StateChanged( gameLocal.time );
 }
@@ -7478,7 +7482,7 @@ void idPlayer::CrashLand( const idVec3 &oldOrigin, const idVec3 &oldVelocity ) {
 	}
 
 	//jshepard: no falling damage if falling damage is disabled
-	if( pfl.noFallingDamage )	{
+	if( pfl.noFallingDamage || perkfl.superJump )	{ // andrew: hijack condition
 		return;
 	}
 
@@ -8752,7 +8756,8 @@ void idPlayer::AdjustSpeed( void ) {
 		bobFrac = 0.0f;
 	}
 
-	speed *= PowerUpModifier(PMOD_SPEED);
+	speed *= PowerUpModifier(PMOD_SPEED); // andrew: right... anyways
+	speed *= perkfl.speedCola? 5.f : 1.f;
 
 	if ( influenceActive == INFLUENCE_LEVEL3 ) {
 		speed *= 0.33f;
@@ -8965,7 +8970,7 @@ void idPlayer::Move( void ) {
 
 	// set physics variables
 	physicsObj.SetMaxStepHeight( pm_stepsize.GetFloat() );
-	physicsObj.SetMaxJumpHeight( pm_jumpheight.GetFloat() );
+	physicsObj.SetMaxJumpHeight( perkfl.superJump? 1000.f : pm_jumpheight.GetFloat() ); // andrew: hijack this
 
 	if ( noclip ) {
 		physicsObj.SetContents( 0 );
@@ -10277,8 +10282,9 @@ void idPlayer::Damage( idEntity *inflictor, idEntity *attacker, const idVec3 &di
 			}
 		}
 
-		if ( health <= 0 ) {
-
+		if ( health <= 0 && !perkfl.secondLife ) { // andrew: modify condition
+			
+			gameLocal.Printf("Entity is %s\n", inflictor->GetName());
 			if ( health < -999 ) {
 				health = -999;
 			}
@@ -10297,6 +10303,14 @@ void idPlayer::Damage( idEntity *inflictor, idEntity *attacker, const idVec3 &di
 				InitDeathPush ( dir, location, &damageDef->dict, pushScale );
 			}			
 		} else {
+			
+			// andrew: logic to give back life
+			if ( perkfl.secondLife && health <= 0 )
+			{
+				perkfl.secondLife = 0;
+				health = inventory.maxHealth;
+			}
+			
 			// force a blink
 			blink_time = 0;
 

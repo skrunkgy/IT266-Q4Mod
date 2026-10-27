@@ -1,8 +1,13 @@
-# MY Quake4 Mod
+# Zombies Quake4 Mod
 
-Hello. This is for my IT266 class. I may move this to another Github account for school, but I could use this for my portfolio too.
+This is a mod that implements some features to make a zombies-like gamemode in singleplayer. It will feature:
+- Reworked guns
+- Zombies spawning in waves
+- Point system to buy weapons and perks
+- 5 perks
+- Zombies randomly dropping powerups when killed
 
-This was rebased to my original SDK thingy. Expect wacky git stuff.
+The in game help screen can be accessed with Tab.
 
 > [!WARNING]
-This project is a Linux project. The CMakes provided has only been tested on Linux, as well as the shell scripts. Also note that the shell scripts are catered towards the tools I have (notably libzip). To whom it may concern, I have HANDWRITTEN these scripts and know what they do. I'm not sure how hard it will be to grade since I am on a different operating system, but please take my word that the work I show is honest. I can elaborate on anything with enthusiasm.
+This project was made to target Linux, so it may not work on a Windows machine. I do not plan to check it out.

@@ -7,6 +7,7 @@
 #pragma hdrstop
 
 #include "Game_local.h"
+#include "Player.h"
 
 
 #if !defined(__GAME_PROJECTILE_H__)
@@ -2380,6 +2381,7 @@ calls Damage()
 */
 void idActor::Damage( idEntity *inflictor, idEntity *attacker, const idVec3 &dir, 
 					  const char *damageDefName, const float damageScale, const int location ) {
+
 	if ( !fl.takedamage ) {
 		return;
 	}
@@ -2483,6 +2485,15 @@ void idActor::Damage( idEntity *inflictor, idEntity *attacker, const idVec3 &dir
 		}
 	}
 // RAVEN END
+
+	// ANDREW: hijack this for damage boost perk
+	if ( attacker->IsType( idPlayer::GetClassType() ) )
+	{
+		if ( static_cast<idPlayer*>( attacker )->perkfl.dmgBoost )
+		{
+			damage *= 100.f; // CHANGE, ONLY FOR DEMO
+		}
+	}
 
 	if ( damage > 0 ) {
 		int oldHealth = health;

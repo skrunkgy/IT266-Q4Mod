@@ -1,8 +1,14 @@
 // ANDREW: Making a separate file to do management of this stuff...
 // If you see a lot of comments, I am doing this for self documentation or self mumbling, not because i used AI. no ai code will be used in this mod.
-// formatting will also attempt to copy the codebase, despite my 
+// formatting will also attempt to copy the codebase, despite my personal preference
+
 
 #include "../idlib/precompiled.h"
+#include "game/Item.h"
+#include "game/Player.h"
+#include "game/gamesys/SysCvar.h"
+#include "game/physics/Physics.h"
+#include "ui/UserInterface.h"
 
 #pragma hdrstop
 
@@ -14,7 +20,6 @@ void idGameLocal::InitZombiesGM() {
 	round = 1;
 	maxRoundZombies = 5;
 	zombiesSpawned = 0;
-	// player doesnt spawn yet, so we will have to do player init stuff some other place
 }
 
 // helper function that just spawns a zombie
@@ -43,28 +48,22 @@ void SpawnZombie(float a, float b) {
 	// zombie monsters in this game come in "transfers". halfway stroggs. pretty cool!
 	// however, monster_failed_transfer has a shotgun, which I would want to disable
 	zombie = gameLocal.SpawnEntityDef("monster_failed_transfer", &dict);
-	zombie->fl.isZombie = true; // NOTE: all flags by default are 0. check idEntity constructor for proof
+	zombie->fl.isZombie = true;
 }
 
 void idGameLocal::ProcessZombiesGM() {
-	// Printf( "Processing ZM!\n" );
-	return;
+	idPlayer* player;
+	idPhysics_Player* physicsObj;
 }
 
+// make sure to do a random chance here too, but disable it for presentation
 void idAI::DropPowerup() {
+	idItemPowerup* item;
 
 }
 
 void Cmd_TestSpawn( const idCmdArgs& args ) {
 	SpawnZombie( atof(args.Argv(0)) , atof(args.Argv(1)) );
-}
-
-void Cmd_TestUI( const idCmdArgs &args ) {
-	idPlayer* player = gameLocal.GetLocalPlayer();
-
-	idUserInterface* gui =  uiManager->FindGui( "guis/buymenu.gui", true, false, true );
-	gui->SetInteractive(1);
-	gameLocal.Printf("%i \n", gui->GetStateBool("gameDraw"));
 }
 
 // buy a weapon, or refill it's ammo
@@ -74,11 +73,32 @@ void Cmd_BuyWeapon( const idCmdArgs &args ) {
 
 // perky
 void Cmd_BuyPerk( const idCmdArgs &args ) {
+	idPlayer* player = gameLocal.GetLocalPlayer();
 
+	// extra boost
+	player->inventory.maxHealth = 150;
+	player->health = 150;
+
+	// update hud
+	player->UpdateHud();
+
+	// set perk flags
+	memset(&player->perkfl, 0xFF, 1);
 }
 
 // we pass a pointer to the entity for some info perhaps?
 void idGameLocal::OnZombieKilled( idEntity* killedZombie ) {
 	GetLocalPlayer()->points += 50 * round;
 	Printf("You now have %i points\n", GetLocalPlayer()->points);
+}
+
+void Cmd_BuyAll( const idCmdArgs &args )
+{
+
+}
+
+// Test ui stuff
+void Cmd_TestUI( const idCmdArgs &args ) {
+	idPlayer* player = gameLocal.GetLocalPlayer();
+	idUserInterface* hud = player->GetHud();
 }

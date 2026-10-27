@@ -1157,8 +1157,22 @@ private:
  	CLASS_STATES_PROTOTYPE( idPlayer );
 
 // ANDREW
+
+#define ZM_POWER_INFAMMO	0;
+#define ZM_POWER_GOD		1;
+
 public:
 	int			points;
+	int			powerTimers[2];
+	
+	struct
+	{
+		bool	speedCola	:1; // makes player faster
+		bool	superJump	:1; // makes player jump higher
+		bool	juggernaut	:1; // gives player extra health (probably wont be used)
+		bool	dmgBoost	:1; // makes player do extra damage
+		bool	secondLife	:1; // totem of undying
+	} perkfl;
 
 };
 
