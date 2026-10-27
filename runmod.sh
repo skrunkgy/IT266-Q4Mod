@@ -5,4 +5,4 @@
 QUAKE_DIR="$HOME/Games/Quake 4"
 MOD_NAME=$1
 
-"$QUAKE_DIR"/quake4 +set fs_game $MOD_NAME
+"$QUAKE_DIR"/quake4 +set fs_game "zombies"

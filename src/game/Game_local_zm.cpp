@@ -8,6 +8,7 @@
 #include "game/Player.h"
 #include "game/gamesys/SysCvar.h"
 #include "game/physics/Physics.h"
+#include "idlib/math/Math.h"
 #include "ui/UserInterface.h"
 
 #pragma hdrstop
@@ -56,15 +57,15 @@ void idGameLocal::ProcessZombiesGM() {
 	idPhysics_Player* physicsObj;
 
 	// simple rounds calc
-	maxRoundZombies = round;
+	maxRoundZombies = Min(round, MAX_ZOMBIES);
 
 	// process rounds
 	if ( zombiesSpawned < maxRoundZombies && zmTimer <= gameLocal.time ) {
 		SpawnZombie(100.f, 10.f);
-		zmTimer = gameLocal.time + 1000;
+		zmTimer = gameLocal.time + 1500;
 		zombiesSpawned++;
 	}
-	else if ( zombiesSpawned >= maxRoundZombies ) {
+	else if ( zombiesSpawned >= maxRoundZombies ) {		// 
 		bool zombiesAlive = false;
 		for (int i = 0; i < MAX_GENTITIES; i++) {
 			if ( entities[i] && entities[i]->fl.isZombie ) {
@@ -74,7 +75,7 @@ void idGameLocal::ProcessZombiesGM() {
 		if ( !zombiesAlive ) {
 			Printf("New Round!\n");
 			zombiesSpawned = 0;
-			zmTimer = gameLocal.time + 3000;
+			zmTimer = gameLocal.time;
 			round++;
 		}
 	}
