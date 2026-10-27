@@ -16,9 +16,9 @@
 #include "ai/AI.h"
 
 void idGameLocal::InitZombiesGM() {
-	zmTimer = 0;
+	zmTimer = gameLocal.time;
 	round = 1;
-	maxRoundZombies = 5;
+	maxRoundZombies = 1;
 	zombiesSpawned = 0;
 }
 
@@ -47,13 +47,38 @@ void SpawnZombie(float a, float b) {
 	
 	// zombie monsters in this game come in "transfers". halfway stroggs. pretty cool!
 	// however, monster_failed_transfer has a shotgun, which I would want to disable
-	zombie = gameLocal.SpawnEntityDef("monster_failed_transfer", &dict);
+	zombie = gameLocal.SpawnEntityDef("monster_slimy_transfer", &dict);
 	zombie->fl.isZombie = true;
 }
 
 void idGameLocal::ProcessZombiesGM() {
 	idPlayer* player;
 	idPhysics_Player* physicsObj;
+
+	// simple rounds calc
+	maxRoundZombies = round;
+
+	// process rounds
+	if ( zombiesSpawned < maxRoundZombies && zmTimer <= gameLocal.time ) {
+		SpawnZombie(100.f, 10.f);
+		zmTimer = gameLocal.time + 1000;
+		zombiesSpawned++;
+	}
+	else if ( zombiesSpawned >= maxRoundZombies ) {
+		bool zombiesAlive = false;
+		for (int i = 0; i < MAX_GENTITIES; i++) {
+			if ( entities[i] && entities[i]->fl.isZombie ) {
+				zombiesAlive = true;
+			}
+		}
+		if ( !zombiesAlive ) {
+			Printf("New Round!\n");
+			zombiesSpawned = 0;
+			zmTimer = gameLocal.time + 3000;
+			round++;
+		}
+	}
+
 }
 
 // make sure to do a random chance here too, but disable it for presentation
