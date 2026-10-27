@@ -1427,6 +1427,8 @@ void idClass::RegisterClasses( void )
 	REGISTER(riDeadZonePowerup); // ..\..\code\game\Item.cpp
 	REGISTER(WeaponNapalmGun);	// ..\..\code\game\weapon\WeaponNapalmGun.cpp
 // RITUAL END
+	// ANDREW: I FUCKING HATE THIS STUPID REFLECTION BULLISHIT!!! FUCK YOU!!
+	REGISTER(Kaboom);
 #undef REGISTER
 }
 

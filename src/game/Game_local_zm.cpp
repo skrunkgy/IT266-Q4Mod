@@ -46,7 +46,8 @@ void SpawnZombie(float a, float b) {
 	gameLocal.TracePoint(player, tr, origin + idVec3(0, 0, 1000), origin + idVec3(0, 0, -1000), MASK_ALL, NULL);
 
 	dict.Set( "origin", tr.endpos.ToString() );
-	
+	dict.SetInt( "health", 50 + gameLocal.GetRound() * 10 );
+
 	// zombie monsters in this game come in "transfers". halfway stroggs. pretty cool!
 	// however, monster_failed_transfer has a shotgun, which I would want to disable
 	zombie = gameLocal.SpawnEntityDef("monster_slimy_transfer", &dict);
@@ -62,7 +63,7 @@ void idGameLocal::ProcessZombiesGM() {
 
 	// process rounds
 	if ( zombiesSpawned < maxRoundZombies && zmTimer <= gameLocal.time ) {
-		SpawnZombie(100.f, 10.f);
+		SpawnZombie(100.f, 500.f);
 		zmTimer = gameLocal.time + 1500;
 		zombiesSpawned++;
 	}
@@ -80,7 +81,6 @@ void idGameLocal::ProcessZombiesGM() {
 			round++;
 		}
 	}
-
 }
 
 void Cmd_TestSpawn( const idCmdArgs& args ) {
@@ -93,6 +93,11 @@ void Cmd_BuyWeapon( const idCmdArgs &args ) {
 	// forgive me father, but i will program this all manually. super duper fucking inefficient, use a def file, but im crunching
 	idDict weapons_points;
 	weapons_points.SetInt("rocketlauncher", 1000);
+	weapons_points.SetInt("rocketlauncher", 1000);
+	weapons_points.SetInt("rocketlauncher", 1000);
+	weapons_points.SetInt("rocketlauncher", 1000);
+	weapons_points.SetInt("rocketlauncher", 1000);
+	// other 5 will not be accessed, maybe ill program them and do give all
 	
 
 	if (args.Argc() != 2) {
@@ -179,18 +184,55 @@ void Cmd_BuyPerk( const idCmdArgs &args ) {
 	return;
 }
 
+// fuck it we ball
+class Kaboom : public idItem {
+public:
+	CLASS_PROTOTYPE( Kaboom );
+
+	Kaboom();
+
+	bool			Pickup( idPlayer *player );
+};
+
+CLASS_DECLARATION( idItem, Kaboom )
+END_CLASS
+
+Kaboom::Kaboom() : idItem() {}
+
+bool Kaboom::Pickup( idPlayer *player ) {
+
+	for (int i = 0; i < MAX_GENTITIES; i++) {
+		idEntity* et = gameLocal.entities[i];
+		if ( et && et->fl.isZombie ) {
+			et->PostEventMS( &EV_Remove, 0 );
+		}
+	}
+
+	trigger->SetContents( 0 );
+	PostEventMS( &EV_Remove, 0 );
+	return 0;
+}
+
+
 // we pass a pointer to the entity for some info perhaps?
 void idGameLocal::OnZombieKilled( idEntity* killedZombie ) {
 	GetLocalPlayer()->points += 50 + round * 25; // CHANGE FOR DEMO
 	Printf("You now have %i points\n", GetLocalPlayer()->points);
 
-	// where we may drop a weapon
+	// where we may drop something... we will do kaboom
+	if ( random.RandomFloat() > .8 ) {
+		idItem* drop;
+		idDict spawnArgs;
 
+		spawnArgs = *FindEntityDefDict("powerup_quad_damage");
+		spawnArgs.Set("origin", killedZombie->GetPhysics()->GetOrigin().ToString());
+
+		gameLocal.SpawnEntityType(Kaboom::GetClassType(), &spawnArgs);
+	}
 }
 
-void Cmd_BuyAll( const idCmdArgs &args )
-{
-
+void Cmd_BuyAll( const idCmdArgs &args ) {
+	gameLocal.GetLocalPlayer()->points = 9999999;
 }
 
 // Test ui stuff

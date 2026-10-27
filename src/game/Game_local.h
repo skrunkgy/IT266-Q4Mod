@@ -1122,6 +1122,7 @@ private:
 	void					ProcessZombiesGM( void );
 public:
 	void					OnZombieKilled( idEntity* );
+	ID_INLINE int			GetRound() { return round; }
 // ANDREW END
 };
 

@@ -204,7 +204,9 @@ entityDef monster_slimy_transfer
 	"action_vomitAttack_blendFrames"		"4"
 	"action_vomitAttack_anim"				""
 	"action_vomitAttack_failrate"			"0"
-		
+	
+	"speed"									"100000"
+
 	// --------------------------------- Body ------------------------------------
 	"model"									"model_monster_slimy_transfer"
 	"ragdoll"								"monster_slimy_transfer"
