@@ -7,7 +7,7 @@ This is a mod that implements some features to make a zombies-like gamemode in s
 - 5 perks
 - Zombies randomly dropping powerups when killed
 
-The in game help screen can be accessed with Tab.
+The in game help screen can be in the credits.
 
 > [!WARNING]
 This project was made to target Linux, so it may not work on a Windows machine. I do not plan to check it out.
