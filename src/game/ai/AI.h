@@ -1236,7 +1236,7 @@ protected:
 	CLASS_STATES_PROTOTYPE ( idAI );
 
 	// andrew: drop item
-	void					DropPowerup();
+	// void					DropPowerup();
 };
 
 /*

@@ -10307,8 +10307,10 @@ void idPlayer::Damage( idEntity *inflictor, idEntity *attacker, const idVec3 &di
 			// andrew: logic to give back life
 			if ( perkfl.secondLife && health <= 0 )
 			{
-				perkfl.secondLife = 0;
+				memset(&perkfl, 0x00, 1); // remove all perks
+				inventory.maxHealth = 100;
 				health = inventory.maxHealth;
+				UpdateHud();
 			}
 			
 			// force a blink

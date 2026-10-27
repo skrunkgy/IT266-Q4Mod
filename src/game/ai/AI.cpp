@@ -3704,12 +3704,6 @@ void idAI::OnDeath( void ){
 		}
 	}
 */
-	
-	// andrew: hijack this for drop
-	if ( fl.isZombie )
-	{
-		DropPowerup();
-	}
 }
 
 /*

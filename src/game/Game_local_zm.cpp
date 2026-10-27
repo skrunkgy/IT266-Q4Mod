@@ -6,6 +6,7 @@
 #include "../idlib/precompiled.h"
 #include "game/Item.h"
 #include "game/Player.h"
+#include "game/gamesys/SysCmds.h"
 #include "game/gamesys/SysCvar.h"
 #include "game/physics/Physics.h"
 #include "idlib/math/Math.h"
@@ -82,12 +83,6 @@ void idGameLocal::ProcessZombiesGM() {
 
 }
 
-// make sure to do a random chance here too, but disable it for presentation
-void idAI::DropPowerup() {
-	idItemPowerup* item;
-
-}
-
 void Cmd_TestSpawn( const idCmdArgs& args ) {
 	SpawnZombie( atof(args.Argv(0)) , atof(args.Argv(1)) );
 }
@@ -95,27 +90,102 @@ void Cmd_TestSpawn( const idCmdArgs& args ) {
 // buy a weapon, or refill it's ammo
 void Cmd_BuyWeapon( const idCmdArgs &args ) {
 
+	// forgive me father, but i will program this all manually. super duper fucking inefficient, use a def file, but im crunching
+	idDict weapons_points;
+	weapons_points.SetInt("rocketlauncher", 1000);
+	
+
+	if (args.Argc() != 2) {
+		gameLocal.Printf("Invalid args...\n");
+		return;
+	}
+	if ( !weapons_points.FindKey(args.Argv(1)) ) {
+		gameLocal.Printf("Not a real weapon...");
+		return;
+	}
+	else if ( gameLocal.GetLocalPlayer()->points < weapons_points.GetInt(args.Argv(1)) ) {
+		gameLocal.Printf("You do not have enough points!\n");
+		return;
+	}
+	cmdSystem->BufferCommandText(CMD_EXEC_NOW, va("give weapon_%s", args.Argv(1)));
+	gameLocal.GetLocalPlayer()->points -= weapons_points.GetInt(args.Argv(1));
+	gameLocal.Printf("Player now has %i points\n", gameLocal.GetLocalPlayer()->points);
+
+	weapons_points.Clear();
 }
 
 // perky
+
+// probably better to define it on top, no time to care
+bool CheckPoints(int cost) {
+	if (gameLocal.GetLocalPlayer()->points < cost) {
+		gameLocal.Printf("Not enough points\n");
+		return false;
+	}
+	
+	gameLocal.GetLocalPlayer()->points -= cost;
+	gameLocal.Printf("Player now has %i points\n", gameLocal.GetLocalPlayer()->points);
+	return true;
+}
+
 void Cmd_BuyPerk( const idCmdArgs &args ) {
+
+	// to easily change it later
+	const int perk_points[] = {
+		1000,
+		2000,
+		3000,
+		4000,
+		5000
+	};
+
 	idPlayer* player = gameLocal.GetLocalPlayer();
 
-	// extra boost
-	player->inventory.maxHealth = 150;
-	player->health = 150;
+	if (args.Argc() != 2) {
+		gameLocal.Printf("Not enough args...\n");
+		return;
+	}
+	
+	// again, forgive me
+	if ( !strcmp( "speed", args.Argv(1) ) && CheckPoints(perk_points[0] ) ) {
+		player->perkfl.speedCola = 1;
+		return;
+	}
+	else if ( !strcmp( "jump", args.Argv(1) ) && CheckPoints(perk_points[1] ) ) {
+		player->perkfl.superJump = 1;
+		return;
+	}
+	else if ( !strcmp( "juggernaug", args.Argv(1) ) && CheckPoints(perk_points[2] ) ) {
+		// extra boost
+		player->inventory.maxHealth = 150;
+		player->health = 150;
 
-	// update hud
-	player->UpdateHud();
+		player->perkfl.juggernaut = 1;
 
-	// set perk flags
-	memset(&player->perkfl, 0xFF, 1);
+		// update hud
+		player->UpdateHud();
+		return;
+	}
+	else if ( !strcmp( "strength", args.Argv(1) ) && CheckPoints(perk_points[3] ) ) {
+		player->perkfl.dmgBoost = 1;
+		return;
+	}
+	else if ( !strcmp( "secondlife", args.Argv(1) ) && CheckPoints(perk_points[4] ) ) {
+		player->perkfl.secondLife = 1;
+		return;
+	}
+
+	gameLocal.Printf("Perk not found...\n");
+	return;
 }
 
 // we pass a pointer to the entity for some info perhaps?
 void idGameLocal::OnZombieKilled( idEntity* killedZombie ) {
-	GetLocalPlayer()->points += 50 * round;
+	GetLocalPlayer()->points += 50 + round * 25; // CHANGE FOR DEMO
 	Printf("You now have %i points\n", GetLocalPlayer()->points);
+
+	// where we may drop a weapon
+
 }
 
 void Cmd_BuyAll( const idCmdArgs &args )
