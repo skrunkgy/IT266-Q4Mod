@@ -1500,7 +1500,6 @@ void idPlayer::Init( void ) {
 
 	// ANDREW
 	points					= 0;
-	memset(powerTimers, 0, sizeof(int)*2);
 	memset(&perkfl, 0, sizeof(perkfl));
 	
 	noclip					= false;
@@ -1813,6 +1812,9 @@ Prepare any resources used by the player.
 void idPlayer::Spawn( void ) {
 	idStr		temp;
 	idBounds	bounds;
+
+	memset(&perkfl, 0, sizeof(perkfl));
+	points = 0;
 
 	if ( entityNumber >= MAX_CLIENTS ) {
 		gameLocal.Error( "entityNum > MAX_CLIENTS for player.  Player may only be spawned with a client." );
@@ -10287,7 +10289,6 @@ void idPlayer::Damage( idEntity *inflictor, idEntity *attacker, const idVec3 &di
 
 		if ( health <= 0 && !perkfl.secondLife ) { // andrew: modify condition
 			
-			gameLocal.Printf("Entity is %s\n", inflictor->GetName());
 			if ( health < -999 ) {
 				health = -999;
 			}

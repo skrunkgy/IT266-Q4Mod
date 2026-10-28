@@ -113,6 +113,8 @@ void Cmd_BuyWeapon( const idCmdArgs &args ) {
 		gameLocal.Printf("You do not have enough points! That costs %i points\n", weapons_points.GetInt(args.Argv(1)));
 		return;
 	}
+
+	// again, double
 	cmdSystem->BufferCommandText(CMD_EXEC_NOW, va("give weapon_%s", args.Argv(1)));
 	gameLocal.GetLocalPlayer()->points -= weapons_points.GetInt(args.Argv(1));
 	gameLocal.Printf("Player now has %i points\n", gameLocal.GetLocalPlayer()->points);
@@ -263,7 +265,11 @@ void Cmd_BuyAll( const idCmdArgs &args ) {
 	gameLocal.GetLocalPlayer()->inventory.maxHealth = 150;
 	gameLocal.GetLocalPlayer()->health = 150;
 
-	
+	cmdSystem->BufferCommandText(CMD_EXEC_NOW, "give weapon_shotgun");
+	cmdSystem->BufferCommandText(CMD_EXEC_NOW, "give weapon_machinegun");
+	cmdSystem->BufferCommandText(CMD_EXEC_NOW, "give weapon_rocketlauncher");
+	cmdSystem->BufferCommandText(CMD_EXEC_NOW, "give weapon_nailgun");
+	cmdSystem->BufferCommandText(CMD_EXEC_NOW, "give weapon_hyperblaster");
 
 	gameLocal.GetLocalPlayer()->UpdateZMHud();
 }

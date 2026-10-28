@@ -113,7 +113,7 @@ entityDef weapon_nailgun
 	"drumSpeed"					".8"
 	
 	"inv_weapon"				"weapon_nailgun"
-	"inv_start_ammo_nailgun"			"50"
+	"inv_start_ammo_nailgun"			"100"
 	"inv_item"					"1"
 	"inv_icon"					"gfx/guis/hud/icons/item_nailgun"
 	"inv_name"					"#str_107407"

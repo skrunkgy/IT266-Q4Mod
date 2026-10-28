@@ -1163,16 +1163,15 @@ private:
 #define ZM_POWER_GOD		1;
 
 public:
-	int			points;
-	int			powerTimers[2];
+	int			points = 0;
 	
 	struct
 	{
-		bool	speedCola	:1; // makes player faster
-		bool	superJump	:1; // makes player jump higher
-		bool	juggernaut	:1; // gives player extra health (probably wont be used)
-		bool	dmgBoost	:1; // makes player do extra damage
-		bool	secondLife	:1; // totem of undying
+		bool	speedCola	:1 = 0; // makes player faster
+		bool	superJump	:1 = 0; // makes player jump higher
+		bool	juggernaut	:1 = 0; // gives player extra health (probably wont be used)
+		bool	dmgBoost	:1 = 0; // makes player do extra damage
+		bool	secondLife	:1 = 0; // totem of undying
 	} perkfl;
 
 	void		UpdateZMHud();

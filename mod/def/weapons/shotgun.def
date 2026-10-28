@@ -84,7 +84,7 @@ entityDef weapon_shotgun
 	"hitscans"				"10"
 
 	"inv_weapon"				"weapon_shotgun"
-	"inv_start_ammo_shotgun"		"10"
+	"inv_start_ammo_shotgun"		"56"
 	"inv_item"				"1"
 	"inv_icon"				"gfx/guis/hud/icons/item_shotgun.tga"
 	"inv_name"				"#str_107410"
