@@ -162,10 +162,12 @@ void Cmd_BuyPerk( const idCmdArgs &args ) {
 	// again, forgive me
 	if ( !strcmp( "speed", args.Argv(1) ) && CheckPoints(perk_points[0] ) ) {
 		player->perkfl.speedCola = 1;
+		player->UpdateZMHud();
 		return;
 	}
 	else if ( !strcmp( "jump", args.Argv(1) ) && CheckPoints(perk_points[1] ) ) {
 		player->perkfl.superJump = 1;
+		player->UpdateZMHud();
 		return;
 	}
 	else if ( !strcmp( "juggernaug", args.Argv(1) ) && CheckPoints(perk_points[2] ) ) {
@@ -176,15 +178,17 @@ void Cmd_BuyPerk( const idCmdArgs &args ) {
 		player->perkfl.juggernaut = 1;
 
 		// update hud
-		player->UpdateHud();
+		player->UpdateZMHud();
 		return;
 	}
 	else if ( !strcmp( "strength", args.Argv(1) ) && CheckPoints(perk_points[3] ) ) {
 		player->perkfl.dmgBoost = 1;
+		player->UpdateZMHud();
 		return;
 	}
 	else if ( !strcmp( "secondlife", args.Argv(1) ) && CheckPoints(perk_points[4] ) ) {
 		player->perkfl.secondLife = 1;
+		player->UpdateZMHud();
 		return;
 	}
 
