@@ -8389,10 +8389,10 @@ windowDef Desktop
 			}
 			windowDef raven
 			{
-				rect	120,40,400,400
+				rect	120,40,400,480
 				visible	1
 				forecolor	1,1,1,1
-				text	"In this gamemode, zombies will spawn around the player in waves. Points will be rewarded for killing the zombies, and will vary based on the round. These points can be used to buy perks and more weapons in the shop. Have fun!"
+				text	"In this gamemode, zombies will spawn around the player in waves. Points will be rewarded for killing the zombies, and will vary based on the round. These points can be used to buy perks and more weapons in the shop. Here are the costs:\nshotgun: 450\nmachinegun: 640\nrocketlauncher: 1000\nnailgun: 1300\nhyperblaster: 3000\nspeed: 1000\njump: 1000\njuggernaug: 1500\nstrength: 3000\nsecondlife: 5000\nThese can be bought by doing 'buyWeapon' or 'buyPerk' in the console. Have fun!"
 				textscale	0.3
 				font	"fonts/lowpixel"
 			}
@@ -12197,7 +12197,7 @@ windowDef Desktop
 					rect	222,75,390,93
 					visible	1
 					forecolor	1,1,1,0
-					text	"QUAKE 4 is an id Software game and is powered by id Software's DOOM 3® technology. Production, development, and technical assistance have been provided by id Software, with specific contributions by:"
+					text	"QUAKE 4 is an id Software game and is powered by id Software's DOOM 3ï¿½ technology. Production, development, and technical assistance have been provided by id Software, with specific contributions by:"
 					textscale	0.25
 					font	"fonts/lowpixel"
 				}
@@ -12368,7 +12368,7 @@ windowDef Desktop
 					rect	222,78,390,93
 					visible	1
 					forecolor	1,1,1,0
-					text	"QUAKE 4 is an id Software game and is powered by id Software's DOOM 3® technology. Production, development, and technical assistance have been provided by id Software, with specific contributions by:"
+					text	"QUAKE 4 is an id Software game and is powered by id Software's DOOM 3ï¿½ technology. Production, development, and technical assistance have been provided by id Software, with specific contributions by:"
 					textscale	0.28
 					font	"fonts/strogg"
 				}
@@ -14538,7 +14538,7 @@ windowDef Desktop
 					rect	103,301,542,72
 					visible	1
 					forecolor	1,1,1,0
-					text	"Quake 4 uses Miles Sound System.\nCopyright © 1991-2003 by RAD Game Tools, Inc."
+					text	"Quake 4 uses Miles Sound System.\nCopyright ï¿½ 1991-2003 by RAD Game Tools, Inc."
 					textscale	.31
 					font	"fonts/lowpixel"
 				}
@@ -24866,6 +24866,62 @@ windowDef Desktop
 				}
 			}
 
+		}
+	}
+	windowDef zm_text
+	{
+		rect	422,95,201,98
+		visible	1
+		windowDef zm_points
+		{
+			rect	8,3,189,30
+			visible	1
+			forecolor	1,1,1,1
+			text	"gui::zm_points"
+			textscale	0.4
+		}
+		windowDef zm_round
+		{
+			rect	8,33,189,30
+			visible	1
+			forecolor	1,1,1,1
+			text	"gui::zm_round"
+			textscale	0.4
+		}
+	}
+	windowDef zm_perks
+	{
+		rect	23,62,267,41
+		visible	1
+		windowDef perk1
+		{
+			rect	9,2,39,37
+			visible	"gui::zm_perk1"
+			backcolor	0,1,0.247,1
+		}
+		windowDef perk2
+		{
+			rect	57,2,39,37
+			visible	"gui::zm_perk2"
+			backcolor	1,0.501,0.250,1
+		}
+		windowDef perk3
+		{
+			rect	103,2,39,37
+			visible	"gui::zm_perk3"
+			backcolor	1,0,0,1
+		}
+		windowDef perk4
+		{
+			rect	148,2,39,37
+			visible	"gui::zm_perk4"
+			backcolor	0,0.501,1,1
+		}
+		windowDef perk5
+		{
+			rect	193,2,39,37
+			visible	"gui::zm_perk5"
+			backcolor	0.501,0,1,1
 		}
 	}
 }

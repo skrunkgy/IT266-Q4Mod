@@ -1115,7 +1115,7 @@ private:
 	int						zmTimer;
 	int						maxRoundZombies;
 	int						zombiesSpawned;
-	int						round;
+	int						round = 1;
 	
 	// I dont want to directly inject code into a game loop yet, so I will just paste this somewhere
 	void					InitZombiesGM( void );

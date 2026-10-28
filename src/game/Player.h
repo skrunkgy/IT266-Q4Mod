@@ -14,6 +14,7 @@
 ===============================================================================
 */
 
+#include "ui/UserInterface.h"
 extern const idEventDef EV_Player_GetButtons;
 extern const idEventDef EV_Player_GetMove;
 extern const idEventDef EV_Player_GetViewAngles;
@@ -1173,6 +1174,8 @@ public:
 		bool	dmgBoost	:1; // makes player do extra damage
 		bool	secondLife	:1; // totem of undying
 	} perkfl;
+
+	void		UpdateZMHud();
 
 };
 

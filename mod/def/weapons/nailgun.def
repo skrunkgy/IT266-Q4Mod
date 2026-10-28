@@ -106,8 +106,8 @@ entityDef weapon_nailgun
 
 	"joint_world_flash"			"nailgun_rotating_drum"
 
-	"fireRate"					".16"
-	"spread"					"3"
+	"fireRate"					".12"
+	"spread"					".3"
 	"spread_mp"					"0"
 	"spreadSeek"				"5"
 	"drumSpeed"					".8"
@@ -127,7 +127,7 @@ entityDef weapon_nailgun
 	"def_altprojectile"			"projectile_nail_seek"
 	"ammoType"					"ammo_nailgun"
 	"ammoRequired"				"1"
-	"clipSize"					"50"
+	"clipSize"					"25"
 	"lowAmmo"					"1"
 
 	"mtr_flashShader"			"lights/muzzleflash"
@@ -137,11 +137,11 @@ entityDef weapon_nailgun
 	"flashTime"					".1"
 	"flashViewOffset"			"15 -5 -5"
 
-	"muzzle_kick_time"			"0.2"
-	"muzzle_kick_maxtime"		"0.6"
+	"muzzle_kick_time"			"0.1"
+	"muzzle_kick_maxtime"		"0.3"
 	"muzzle_kick_angles"		"0 0 0"
 	"muzzle_kick_offset"		"0.5 .15 .15"
-	"recoilTime"				"145"
+	"recoilTime"				"50"
 	"recoilAngles"				"-1 0 0"
 	
 	"ammoRegenStep"				"2"
@@ -465,7 +465,7 @@ entityDef projectile_nail_seek
 
 entityDef damage_nailDirect 
 {
-	"damage"					"25"
+	"damage"					"35"
 //	"push"						"1000"
 	"gib"						"0"
 
@@ -479,7 +479,7 @@ entityDef damage_nailDirect
 entityDef damage_nailSplash 
 {
 	"damage"					"25"
-	"radius"					"50"
+	"radius"					"0"
 	"knockback"					"5"
 	"push"						"0"
 	"gib"						"0"

@@ -1339,6 +1339,9 @@ idPlayer::idPlayer() {
 	teamAmmoRegenPending	= false;
 	teamDoubler			= NULL;		
 	teamDoublerPending		= false;
+
+	// andrew: update the "hud" once player spawns
+	UpdateZMHud();
 }
 
 /*

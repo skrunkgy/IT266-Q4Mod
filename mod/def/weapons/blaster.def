@@ -81,7 +81,7 @@ entityDef weapon_blaster
 	"chargeTime"				".8"
 	"chargeDelay"				".1"
 	"chargeGlow"				"0 .4"
-	"fireRate"					".15"
+	"fireRate"					".12"
 	"spread"					".2"
 
 //	"def_projectile"			"projectile_blaster"
@@ -310,7 +310,7 @@ entityDef projectile_blaster_charged
 entityDef damage_blaster
 {
 	"inherit"					"damage_bullet"
-	"damage"					"8"
+	"damage"					"20"
 
 	"fx_wound"					"effects/wounds/energy.fx"
 

@@ -59,26 +59,27 @@ void idGameLocal::ProcessZombiesGM() {
 	idPhysics_Player* physicsObj;
 
 	// simple rounds calc
-	maxRoundZombies = Min(round, MAX_ZOMBIES);
+	maxRoundZombies = Min(2 + round, MAX_ZOMBIES);
 
 	// process rounds
 	if ( zombiesSpawned < maxRoundZombies && zmTimer <= gameLocal.time ) {
-		SpawnZombie(100.f, 500.f);
-		zmTimer = gameLocal.time + 1500;
+		SpawnZombie(75.f, 300.f);
+		zmTimer = gameLocal.time + 1000;
 		zombiesSpawned++;
 	}
 	else if ( zombiesSpawned >= maxRoundZombies ) {		// 
 		bool zombiesAlive = false;
 		for (int i = 0; i < MAX_GENTITIES; i++) {
-			if ( entities[i] && entities[i]->fl.isZombie ) {
+			if ( entities[i] && entities[i]->fl.isZombie && !static_cast<idAI*>(entities[i])->aifl.dead ) {
 				zombiesAlive = true;
 			}
 		}
 		if ( !zombiesAlive ) {
 			Printf("New Round!\n");
 			zombiesSpawned = 0;
-			zmTimer = gameLocal.time;
+			zmTimer = gameLocal.time + 3000;
 			round++;
+			GetLocalPlayer()->UpdateZMHud();
 		}
 	}
 }
@@ -92,11 +93,11 @@ void Cmd_BuyWeapon( const idCmdArgs &args ) {
 
 	// forgive me father, but i will program this all manually. super duper fucking inefficient, use a def file, but im crunching
 	idDict weapons_points;
-	weapons_points.SetInt("rocketlauncher", 1000);
-	weapons_points.SetInt("rocketlauncher", 1000);
-	weapons_points.SetInt("rocketlauncher", 1000);
-	weapons_points.SetInt("rocketlauncher", 1000);
-	weapons_points.SetInt("rocketlauncher", 1000);
+	weapons_points.SetInt("shotgun", 450); // krm-262
+	weapons_points.SetInt("machinegun", 640); // hvk-30
+	weapons_points.SetInt("rocketlauncher", 1000); // xm-53
+	weapons_points.SetInt("nailgun", 1300); // BRM
+	weapons_points.SetInt("hyperblaster", 3000); // diy-11 rennovator
 	// other 5 will not be accessed, maybe ill program them and do give all
 	
 
@@ -105,16 +106,18 @@ void Cmd_BuyWeapon( const idCmdArgs &args ) {
 		return;
 	}
 	if ( !weapons_points.FindKey(args.Argv(1)) ) {
-		gameLocal.Printf("Not a real weapon...");
+		gameLocal.Printf("Not a purchasable weapon...");
 		return;
 	}
 	else if ( gameLocal.GetLocalPlayer()->points < weapons_points.GetInt(args.Argv(1)) ) {
-		gameLocal.Printf("You do not have enough points!\n");
+		gameLocal.Printf("You do not have enough points! That costs %i points\n", weapons_points.GetInt(args.Argv(1)));
 		return;
 	}
 	cmdSystem->BufferCommandText(CMD_EXEC_NOW, va("give weapon_%s", args.Argv(1)));
 	gameLocal.GetLocalPlayer()->points -= weapons_points.GetInt(args.Argv(1));
 	gameLocal.Printf("Player now has %i points\n", gameLocal.GetLocalPlayer()->points);
+
+	gameLocal.GetLocalPlayer()->UpdateZMHud();
 
 	weapons_points.Clear();
 }
@@ -124,12 +127,15 @@ void Cmd_BuyWeapon( const idCmdArgs &args ) {
 // probably better to define it on top, no time to care
 bool CheckPoints(int cost) {
 	if (gameLocal.GetLocalPlayer()->points < cost) {
-		gameLocal.Printf("Not enough points\n");
+		gameLocal.Printf("Not enough points. That costs %i points\n", cost);
 		return false;
 	}
 	
 	gameLocal.GetLocalPlayer()->points -= cost;
 	gameLocal.Printf("Player now has %i points\n", gameLocal.GetLocalPlayer()->points);
+
+	gameLocal.GetLocalPlayer()->UpdateZMHud();
+
 	return true;
 }
 
@@ -138,9 +144,9 @@ void Cmd_BuyPerk( const idCmdArgs &args ) {
 	// to easily change it later
 	const int perk_points[] = {
 		1000,
-		2000,
+		1000,
+		1500,
 		3000,
-		4000,
 		5000
 	};
 
@@ -220,7 +226,7 @@ void idGameLocal::OnZombieKilled( idEntity* killedZombie ) {
 	Printf("You now have %i points\n", GetLocalPlayer()->points);
 
 	// where we may drop something... we will do kaboom
-	if ( random.RandomFloat() > .8 ) {
+	if ( random.RandomFloat() > .6 ) {
 		idItem* drop;
 		idDict spawnArgs;
 
@@ -229,14 +235,40 @@ void idGameLocal::OnZombieKilled( idEntity* killedZombie ) {
 
 		gameLocal.SpawnEntityType(Kaboom::GetClassType(), &spawnArgs);
 	}
+	GetLocalPlayer()->UpdateZMHud();
+}
+
+// where we will update things for our main hud
+void idPlayer::UpdateZMHud() {
+
+	idUserInterface* hud = uiManager->FindGuiByIndex(0);
+	if (hud) {
+		hud->SetStateString("zm_round", va( "Round: %i", gameLocal.GetRound() ) );
+		hud->SetStateString("zm_points", va( "Points: %i", points ) );
+
+		hud->SetStateString("zm_perk1", va( "%i", perkfl.speedCola ) );
+		hud->SetStateString("zm_perk2", va( "%i", perkfl.superJump ) );
+		hud->SetStateString("zm_perk3", va( "%i", perkfl.juggernaut ) );
+		hud->SetStateString("zm_perk4", va( "%i", perkfl.dmgBoost ) );
+		hud->SetStateString("zm_perk5", va( "%i", perkfl.secondLife ) );
+	}
+
+	UpdateHud();
 }
 
 void Cmd_BuyAll( const idCmdArgs &args ) {
 	gameLocal.GetLocalPlayer()->points = 9999999;
+
+	memset(&gameLocal.GetLocalPlayer()->perkfl, 0xFF, 1);
+	gameLocal.GetLocalPlayer()->inventory.maxHealth = 150;
+	gameLocal.GetLocalPlayer()->health = 150;
+
+	
+
+	gameLocal.GetLocalPlayer()->UpdateZMHud();
 }
 
 // Test ui stuff
 void Cmd_TestUI( const idCmdArgs &args ) {
-	idPlayer* player = gameLocal.GetLocalPlayer();
-	idUserInterface* hud = player->GetHud();
+	gameLocal.GetLocalPlayer()->UpdateZMHud();
 }
