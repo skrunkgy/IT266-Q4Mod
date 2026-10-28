@@ -10314,7 +10314,7 @@ void idPlayer::Damage( idEntity *inflictor, idEntity *attacker, const idVec3 &di
 				memset(&perkfl, 0x00, 1); // remove all perks
 				inventory.maxHealth = 100;
 				health = inventory.maxHealth;
-				UpdateHud();
+				UpdateZMHud();
 			}
 			
 			// force a blink
